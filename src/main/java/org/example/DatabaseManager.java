@@ -51,7 +51,7 @@ public class DatabaseManager {
         try{
             DatabaseManager dm = new DatabaseManager();
             PlayerDAO playerDAO = dm.createPlayerDAO();
-            playerDAO.addAllPlayers();
+//            playerDAO.addAllPlayers();
             System.out.println(playerDAO.getPlayerByName("Patrick Mahomes"));
             dm.closeConnection();
         }
