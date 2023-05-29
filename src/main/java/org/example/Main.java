@@ -1,13 +1,17 @@
 package org.example;
 
 import java.util.HashMap;
+import java.util.ArrayList;
 import java.util.InputMismatchException;
 import java.util.Scanner;
 import java.io.IOException;
 import java.sql.SQLException;
 
 public class Main {
-    TradeCalculator tc;
+    static TradeCalculator tc;
+    static Trade trade;
+    static Team userTeam;
+    static Team oppTeam;
     static PlayerDAO playerDatabase;
     static String[] positionList;
     static Scanner scanner;
@@ -16,13 +20,25 @@ public class Main {
         System.out.println("Welcome to the Fantasy Trade Calculator!");
         initialize();
         HashMap<String, Integer> rosCons = setRosConstruction();
-        Team userTeam = new Team ("User's Team", rosCons);
-        Team oppTeam = new Team ("Trade Partner's Team", rosCons);
-        int rosterSize = getRosterSize(userTeam);
+        userTeam = new Team ("User's Team", rosCons);
+        oppTeam = new Team ("Trade Partner's Team", rosCons);
+        trade = new Trade(userTeam, oppTeam);
+        int rosterSize =  getInt("How many players are on your roster including bench?", startingRosterSize(),30);
         fillTeamRoster(userTeam, "your", rosterSize);
         fillTeamRoster(oppTeam, "your trade partner's", rosterSize);
-        for (Player p : oppTeam.getRoster()){
-            System.out.println(p);
+        getTradeInfo();
+        try{
+            System.out.println("Evaluating Trade....");
+            Thread.sleep(1000);
+            System.out.println("Referencing Database....");
+            Thread.sleep(1000);
+            System.out.println("Exploring alternate dimensions....");
+            Thread.sleep(1000);
+            System.out.println("Solving world hunger....");
+            Thread.sleep(1000);
+            System.out.println(tc.getTradeWinner());
+        } catch (InterruptedException e){
+            System.out.println("Uh oh");
         }
     }
 
@@ -38,30 +54,16 @@ public class Main {
         }
     }
 
-    public static HashMap<String, Integer> setRosConstruction() {
+    private static HashMap<String, Integer> setRosConstruction() {
         HashMap<String, Integer> rosCons = new HashMap<>();
         for (String pos : positionList) {
-            System.out.println("Please enter the number of " + pos + "s on your starting roster.");
-            int inputNum;
-            while (true) {
-                try {
-                    inputNum = scanner.nextInt();
-                    if (inputNum >= 0 && inputNum < 5) {
-                        break;
-                    }
-                    System.out.println("Please enter a valid number.");
-                } catch (InputMismatchException e) {
-                    System.out.println("Please enter a valid number.");
-                }
-                scanner.nextLine();
-            }
-            rosCons.put(pos, inputNum);
+            rosCons.put(pos, getInt("Please enter the number of " + pos + "s on your starting roster.", 0, 5));
         }
         return rosCons;
     }
 
-    public static void fillTeamRoster(Team team, String teamName, int rosterSize){
-        System.out.println("Please enter all the players on " + teamName + " roster (including bench)");
+    private static void fillTeamRoster(Team team, String teamName, int rosterSize){
+        System.out.println("Please enter all the players on " + teamName + " roster (including bench).");
         while (team.getRoster().size() != rosterSize){
             String playerName = scanner.nextLine();
             Player p = playerDatabase.getPlayerByName(playerName);
@@ -73,13 +75,38 @@ public class Main {
         }
     }
 
-    private static int getRosterSize(Team team){
-        int rosterSize;
-        System.out.println("How many players are on your roster including bench?");
+    private static void getTradeInfo(){
+        int numPlayersGained = getInt("Please enter the number of players you've gained from this trade.",1, startingRosterSize());
+        int numPlayersLost = getInt("Please enter the number of players you've traded away.", 1, userTeam.getRoster().size());
+        System.out.println("Please enter all the players you've gained from this trade.");
+        addPlayersInTrade(numPlayersGained,trade.assetsGained);
+        System.out.println("Please enter all the players you've traded away.");
+        scanner.nextLine();
+        addPlayersInTrade(numPlayersLost,trade.assetsLost);
+        tc = new TradeCalculator(trade);
+    }
+
+    private static void addPlayersInTrade(int numPlayers, ArrayList<Player> playerList){
+        while (trade.assetsGained.size() != numPlayers){
+            String playerName = scanner.nextLine();
+            Player p = playerDatabase.getPlayerByName(playerName);
+            if (p != null){
+                playerList.add(p);
+            }
+            else
+                System.out.println("Please enter a valid player or check spelling.");
+        }
+    }
+
+
+
+    private static int getInt(String outputText, int lowerBound, int upperBound){
+        int i;
+        System.out.println(outputText);
         while(true){
             try {
-                rosterSize = scanner.nextInt();
-                if (rosterSize >= startingRosterSize(team) && rosterSize <= 30){
+                i = scanner.nextInt();
+                if (i >= lowerBound && i <= upperBound){
                     break;
                 }
                 System.out.println("Please enter a valid number.");
@@ -89,14 +116,15 @@ public class Main {
             }
         }
         scanner.nextLine();
-        return rosterSize;
+        return i;
     }
 
-    private static int startingRosterSize(Team team){
+    private static int startingRosterSize(){
         int count = 0;
-        for (int positionLimit : team.getRosterConstruction().values()){
+        for (int positionLimit : userTeam.getRosterConstruction().values()){
             count += positionLimit;
         }
         return count;
     }
+
 }

@@ -46,16 +46,11 @@ public class TradeCalcTest {
         playerB.setInjuryRisk(2.5); playerA.setInjuryRisk(2.5);
         team1.addPlayerToRoster(playerA);
         team2.addPlayerToRoster(playerB);
-        team1.getStartingRoster(); team2.getStartingRoster();
-
 
         Trade trade = new Trade(team1,team2);
 
-        trade.addLostAsset(playerA); trade.addNewAsset(playerB);
+        trade.assetsLost.add(playerA); trade.assetsGained.add(playerB);
         TradeCalculator tc = new TradeCalculator(trade);
-        team1.getStartingRoster(); team2.getStartingRoster();
-
-
         System.out.println(tc.getTradeWinner());
     }
 
@@ -127,8 +122,8 @@ public class TradeCalcTest {
     public void executeTradeTest(){
         team2.addPlayerToRoster(playerE);
         Trade trade = new Trade(team,team2);
-        trade.addNewAsset(playerE); //team 1 gains justin jefferson
-        trade.addLostAsset(playerD); //team 1 loses kelce
+        trade.assetsGained.add(playerE); //team 1 gains justin jefferson
+        trade.assetsLost.add(playerD); //team 1 loses kelce
         trade.executeTrade();
         ArrayList<Player> team2PostTrade = new ArrayList<>();
         team2PostTrade.add(playerD);
@@ -143,7 +138,7 @@ public class TradeCalcTest {
         team.addPlayerToRoster(playerA); team2.addPlayerToRoster(playerB);
         Trade trade = new Trade(team,team2);
 
-        trade.addLostAsset(playerA); trade.addNewAsset(playerB);
+        trade.assetsLost.add(playerA); trade.assetsGained.add(playerB);
         TradeCalculator tc = new TradeCalculator(trade);
         team.getStartingRoster(); team2.getStartingRoster();
 

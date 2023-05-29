@@ -13,12 +13,6 @@ public class Trade {
         assetsGained = new ArrayList<>();
         assetsLost = new ArrayList<>();
     }
-    public void addLostAsset(Player player){
-        assetsLost.add(player);
-    }
-    public void addNewAsset(Player player){
-        assetsGained.add(player);
-    }
 
     public void executeTrade(){
         team1.clearStartingRoster();
@@ -35,9 +29,9 @@ public class Trade {
                 team1.addPlayerToRoster(a);
             }
         }
-
+        team1.getStartingRoster();
+        team2.getStartingRoster();
     }
-
     @Override
     public String toString(){
         return "Assets Lost: " + assetsLost.toString() + "\nAssets Gained: " + assetsGained.toString();

@@ -30,14 +30,14 @@ public class TradeCalculator {
             return trade.team1;
         }
         else {
-//            System.out.println(getWeightedGrade(trade.team1, prevTeam1));
-//            System.out.println(getProjGrades(trade.team1,prevTeam1));
-//            System.out.println(getUpsideGrades(trade.team1,prevTeam1));
-//
-//            System.out.println("----");
-//            System.out.println(getWeightedGrade(trade.team2, prevTeam2));
-//            System.out.println(getProjGrades(trade.team2,prevTeam2));
-//            System.out.println(getUpsideGrades(trade.team2,prevTeam2));
+            System.out.println(getWeightedGrade(trade.team1, prevTeam1));
+            System.out.println(getProjGrades(trade.team1,prevTeam1));
+            System.out.println(getUpsideGrades(trade.team1,prevTeam1));
+
+            System.out.println("----");
+            System.out.println(getWeightedGrade(trade.team2, prevTeam2));
+            System.out.println(getProjGrades(trade.team2,prevTeam2));
+            System.out.println(getUpsideGrades(trade.team2,prevTeam2));
 
             return trade.team2;
         }
