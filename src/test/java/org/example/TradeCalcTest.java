@@ -43,7 +43,7 @@ public class TradeCalcTest {
 
         Player playerA = new Player ("Pat", "KC", "QB", 416.7, 1);
         Player playerB = new Player ("Josh", "BUF", "QB", 401.7,1);
-        playerB.setInjuryRisk(2.5); playerA.setInjuryRisk(2.5);
+        playerB.setInjuryRisk(5.0); playerA.setInjuryRisk(2.5);
         team1.addPlayerToRoster(playerA);
         team2.addPlayerToRoster(playerB);
 

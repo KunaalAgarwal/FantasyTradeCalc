@@ -8,7 +8,7 @@ import java.io.IOException;
 import java.sql.SQLException;
 
 public class Main {
-    static TradeCalculator tc;
+    static TradeCalculator tradeCalculator;
     static Trade trade;
     static Team userTeam;
     static Team oppTeam;
@@ -19,49 +19,23 @@ public class Main {
     public static void main(String[] args) {
         System.out.println("Welcome to the Fantasy Trade Calculator!");
         initialize();
-        HashMap<String, Integer> rosCons = setRosConstruction();
-        userTeam = new Team ("User's Team", rosCons);
-        oppTeam = new Team ("Trade Partner's Team", rosCons);
-        trade = new Trade(userTeam, oppTeam);
         int rosterSize =  getInt("How many players are on your roster including bench?", startingRosterSize(),30);
         fillTeamRoster(userTeam, "your", rosterSize);
         fillTeamRoster(oppTeam, "your trade partner's", rosterSize);
-//        for (Player p : userTeam.getRoster()){
-//            System.out.println(p);
-//        }
-//        for (Player p : oppTeam.getRoster()){
-//            System.out.println(p);
-//        }
         getTradeInfo();
-
-//        for (Player p : trade.assetsGained){
-//            System.out.println(p);
-//        }
-//        for (Player p : trade.assetsLost){
-//            System.out.println(p);
-//        }
-
-        try{
-            System.out.println("Evaluating Trade....");
-            Thread.sleep(1000);
-            System.out.println("Referencing Database....");
-            Thread.sleep(1000);
-            System.out.println("Exploring alternate dimensions....");
-            Thread.sleep(1000);
-            System.out.println("Solving world hunger....");
-            Thread.sleep(1000);
-            System.out.println(tc.getTradeWinner());
-        } catch (InterruptedException e){
-            System.out.println("Uh oh");
-        }
+        executeTradeCalculator();
     }
 
     public static void initialize(){
-        try{
+        try {
             scanner = new Scanner(System.in);
             DatabaseManager dm = new DatabaseManager();
             playerDatabase = dm.createPlayerDAO();
             positionList = new String[]{"QB", "RB", "WR", "TE"};
+            HashMap<String, Integer> rosCons = setRosConstruction();
+            userTeam = new Team ("User's Team", rosCons);
+            oppTeam = new Team ("Trade Partner's Team", rosCons);
+            trade = new Trade(userTeam, oppTeam);
         }
         catch (SQLException | IOException e){
             System.out.println("Database could not be accessed. Please rerun the program.");
@@ -96,7 +70,7 @@ public class Main {
         addPlayersInTrade(numPlayersGained,trade.assetsGained);
         System.out.println("Please enter all the players you've traded away.");
         addPlayersInTrade(numPlayersLost, trade.assetsLost);
-        tc = new TradeCalculator(trade);
+        tradeCalculator = new TradeCalculator(trade);
     }
 
     private static void addPlayersInTrade(int numPlayers, ArrayList<Player> playerList){
@@ -108,6 +82,23 @@ public class Main {
             }
             else
                 System.out.println("Please enter a valid player or check spelling.");
+        }
+    }
+
+    private static void executeTradeCalculator(){
+        scanner.close();
+        try{
+            System.out.println("Evaluating Trade....");
+            Thread.sleep(1000);
+            System.out.println("Referencing Database....");
+            Thread.sleep(1000);
+            System.out.println("Exploring alternate dimensions....");
+            Thread.sleep(1000);
+            System.out.println("Solving world hunger....");
+            Thread.sleep(1000);
+            System.out.println(tradeCalculator.getTradeWinner());
+        } catch (InterruptedException e){
+            System.out.println("Please rerun the program, a fatal error occurred.");
         }
     }
 
