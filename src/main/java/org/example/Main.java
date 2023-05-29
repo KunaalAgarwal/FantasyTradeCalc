@@ -26,7 +26,21 @@ public class Main {
         int rosterSize =  getInt("How many players are on your roster including bench?", startingRosterSize(),30);
         fillTeamRoster(userTeam, "your", rosterSize);
         fillTeamRoster(oppTeam, "your trade partner's", rosterSize);
+//        for (Player p : userTeam.getRoster()){
+//            System.out.println(p);
+//        }
+//        for (Player p : oppTeam.getRoster()){
+//            System.out.println(p);
+//        }
         getTradeInfo();
+
+//        for (Player p : trade.assetsGained){
+//            System.out.println(p);
+//        }
+//        for (Player p : trade.assetsLost){
+//            System.out.println(p);
+//        }
+
         try{
             System.out.println("Evaluating Trade....");
             Thread.sleep(1000);
@@ -81,13 +95,12 @@ public class Main {
         System.out.println("Please enter all the players you've gained from this trade.");
         addPlayersInTrade(numPlayersGained,trade.assetsGained);
         System.out.println("Please enter all the players you've traded away.");
-        scanner.nextLine();
-        addPlayersInTrade(numPlayersLost,trade.assetsLost);
+        addPlayersInTrade(numPlayersLost, trade.assetsLost);
         tc = new TradeCalculator(trade);
     }
 
     private static void addPlayersInTrade(int numPlayers, ArrayList<Player> playerList){
-        while (trade.assetsGained.size() != numPlayers){
+        while (playerList.size() != numPlayers){
             String playerName = scanner.nextLine();
             Player p = playerDatabase.getPlayerByName(playerName);
             if (p != null){
@@ -97,8 +110,6 @@ public class Main {
                 System.out.println("Please enter a valid player or check spelling.");
         }
     }
-
-
 
     private static int getInt(String outputText, int lowerBound, int upperBound){
         int i;
