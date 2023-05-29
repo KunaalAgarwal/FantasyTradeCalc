@@ -2,7 +2,6 @@ package org.example;
 
 import java.util.*;
 
-
 public class Team {
     String name;
     private ArrayList<Player> roster;

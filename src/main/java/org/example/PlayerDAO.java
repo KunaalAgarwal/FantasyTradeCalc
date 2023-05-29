@@ -31,7 +31,6 @@ public class PlayerDAO {
         }
         return player;
     }
-
     public void addAllPlayers(){
         for (Player p : parser.getPlayerList()){
             save(p);

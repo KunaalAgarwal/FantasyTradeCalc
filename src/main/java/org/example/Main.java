@@ -18,7 +18,12 @@ public class Main {
         HashMap<String, Integer> rosCons = setRosConstruction();
         Team userTeam = new Team ("User's Team", rosCons);
         Team oppTeam = new Team ("Trade Partner's Team", rosCons);
-
+        int rosterSize = getRosterSize(userTeam);
+        fillTeamRoster(userTeam, "your", rosterSize);
+        fillTeamRoster(oppTeam, "your trade partner's", rosterSize);
+        for (Player p : oppTeam.getRoster()){
+            System.out.println(p);
+        }
     }
 
     public static void initialize(){
@@ -41,7 +46,7 @@ public class Main {
             while (true) {
                 try {
                     inputNum = scanner.nextInt();
-                    if (inputNum > 0 && inputNum < 5) {
+                    if (inputNum >= 0 && inputNum < 5) {
                         break;
                     }
                     System.out.println("Please enter a valid number.");
@@ -55,5 +60,43 @@ public class Main {
         return rosCons;
     }
 
+    public static void fillTeamRoster(Team team, String teamName, int rosterSize){
+        System.out.println("Please enter all the players on " + teamName + " roster (including bench)");
+        while (team.getRoster().size() != rosterSize){
+            String playerName = scanner.nextLine();
+            Player p = playerDatabase.getPlayerByName(playerName);
+            if (p != null){
+                team.addPlayerToRoster(p);
+            }
+            else
+                System.out.println("Please enter a valid player or check spelling.");
+        }
+    }
 
+    private static int getRosterSize(Team team){
+        int rosterSize;
+        System.out.println("How many players are on your roster including bench?");
+        while(true){
+            try {
+                rosterSize = scanner.nextInt();
+                if (rosterSize >= startingRosterSize(team) && rosterSize <= 30){
+                    break;
+                }
+                System.out.println("Please enter a valid number.");
+            } catch (InputMismatchException e) {
+                System.out.println("Please enter a valid number.");
+                scanner.nextLine();
+            }
+        }
+        scanner.nextLine();
+        return rosterSize;
+    }
+
+    private static int startingRosterSize(Team team){
+        int count = 0;
+        for (int positionLimit : team.getRosterConstruction().values()){
+            count += positionLimit;
+        }
+        return count;
+    }
 }
