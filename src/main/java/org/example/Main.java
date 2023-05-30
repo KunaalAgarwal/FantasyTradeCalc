@@ -96,6 +96,7 @@ public class Main {
             Thread.sleep(1000);
             System.out.println("Solving world hunger....");
             Thread.sleep(1000);
+            System.out.println(" ");
             System.out.println(tradeCalculator.getTradeWinner());
         } catch (InterruptedException e){
             System.out.println("Please rerun the program, a fatal error occurred.");
