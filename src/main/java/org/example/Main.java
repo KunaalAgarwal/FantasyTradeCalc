@@ -88,16 +88,15 @@ public class Main {
     private static void executeTradeCalculator(){
         scanner.close();
         try{
-            System.out.println("Evaluating Trade....");
+            System.out.println("\nEvaluating Trade....");
             Thread.sleep(1000);
             System.out.println("Referencing Database....");
             Thread.sleep(1000);
             System.out.println("Exploring alternate dimensions....");
             Thread.sleep(1000);
-            System.out.println("Solving world hunger....");
+            System.out.println("Solving world hunger....\n");
             Thread.sleep(1000);
-            System.out.println(" ");
-            System.out.println(tradeCalculator.getTradeWinner());
+            System.out.println("\n" + tradeCalculator.getTradeWinner());
         } catch (InterruptedException e){
             System.out.println("Please rerun the program, a fatal error occurred.");
         }

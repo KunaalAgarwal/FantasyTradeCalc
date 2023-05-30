@@ -42,6 +42,10 @@ public class Player {
     public void setProjection(Double projection){
         this.projection = projection;
     }
+    public void setName(String name){
+        this.name = name;
+    }
+
     public int getTier() {
         return tier;
     }

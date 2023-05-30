@@ -16,7 +16,7 @@ public class PlayerDAO {
         Player player = null;
         try {
             stmt = con.prepareStatement("SELECT * FROM Players WHERE Name = ?");
-            stmt.setString(1, playerName);
+            stmt.setString(1, playerName.toUpperCase());
             rs = stmt.executeQuery();
             if (rs.next()){
                 player = new Player(rs.getString("Name"),rs.getString("Team"),
@@ -33,6 +33,7 @@ public class PlayerDAO {
     }
     public void addAllPlayers(){
         for (Player p : parser.getPlayerList()){
+            p.setName(p.getName().toUpperCase());
             save(p);
         }
     }
@@ -65,7 +66,7 @@ public class PlayerDAO {
         }
         try{
             stmt = con.prepareStatement("DELETE FROM Players WHERE Name = ?");
-            stmt.setString(1,player.getName());
+            stmt.setString(1,player.getName().toUpperCase());
         }
         catch (SQLException e) {
             System.out.println("An error occurred in the database");
@@ -77,7 +78,7 @@ public class PlayerDAO {
         ResultSet rs;
         try {
             stmt = con.prepareStatement("SELECT * FROM Players WHERE Name = ?");
-            stmt.setString(1, player.getName());
+            stmt.setString(1, player.getName().toUpperCase());
             rs = stmt.executeQuery();
             if (rs.next()){
                 return true;
