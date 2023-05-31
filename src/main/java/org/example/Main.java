@@ -69,8 +69,8 @@ public class Main {
     }
 
     private static void getTradeInfo(){
-        int numPlayersGained = getInt("Please enter the number of players you've gained from this trade.",1, startingRosterSize());
-        int numPlayersLost = getInt("Please enter the number of players you've traded away.", 1, userTeam.getRoster().size());
+        int numPlayersGained = getInt("Please enter the number of players you've gained from this trade.",0, startingRosterSize());
+        int numPlayersLost = getInt("Please enter the number of players you've traded away.", 0, userTeam.getRoster().size());
         System.out.println("Please enter all the players you've gained from this trade.");
         addPlayersInTrade(numPlayersGained,trade.assetsGained, oppTeam);
         System.out.println("Please enter all the players you've traded away.");

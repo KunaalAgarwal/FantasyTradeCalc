@@ -42,17 +42,32 @@ public class TradeCalculator {
     }
 
     private double getProjGrades(Team team, Team prevTeam){
-        double projDif = team.getTotalProjection() - prevTeam.getTotalProjection();
+        double postTotalProj = team.getTotalProjection();
+        double prevTotalProj = prevTeam.getTotalProjection();
+        if (Double.isNaN(postTotalProj)){
+            postTotalProj = 0;
+        }
+        else if (Double.isNaN(prevTotalProj)){
+            prevTotalProj = 0;
+        }
+        double projDif = postTotalProj - prevTotalProj;
         return normalizeDif(projDif, 40);
     }
-
 
     private double getUpsideGrades(Team team, Team prevTeam){
         ArrayList<Player> playersGained = trade.assetsGained;
         if (team.getName().equals(trade.team2.getName())){
             playersGained = trade.assetsLost;
         }
-        double upsideDif = average(playersGained) - prevTeam.getAvgProj();
+        double playersGainedUpside = average(playersGained);
+        double prevTeamUpside = prevTeam.getAvgProj();
+        if (Double.isNaN(playersGainedUpside)){
+            playersGainedUpside = 0;
+        }
+        else if (Double.isNaN(prevTeamUpside)){
+            prevTeamUpside = 0;
+        }
+        double upsideDif = playersGainedUpside - prevTeamUpside;
         return normalizeDif(upsideDif, 25);
     }
 
