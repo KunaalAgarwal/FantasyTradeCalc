@@ -52,11 +52,16 @@ public class Main {
 
     private static void fillTeamRoster(Team team, String teamName, int rosterSize){
         System.out.println("Please enter all the players on " + teamName + " roster (including bench).");
+
         while (team.getRoster().size() != rosterSize){
             String playerName = scanner.nextLine();
             Player p = playerDatabase.getPlayerByName(playerName);
             if (p != null){
-                team.addPlayerToRoster(p);
+                if (!userTeam.getRoster().contains(p) && !oppTeam.getRoster().contains(p)){
+                    team.addPlayerToRoster(p);
+                }
+                else
+                    System.out.println("This player is already on a roster. Please enter a valid player.");
             }
             else
                 System.out.println("Please enter a valid player or check spelling.");
@@ -67,17 +72,17 @@ public class Main {
         int numPlayersGained = getInt("Please enter the number of players you've gained from this trade.",1, startingRosterSize());
         int numPlayersLost = getInt("Please enter the number of players you've traded away.", 1, userTeam.getRoster().size());
         System.out.println("Please enter all the players you've gained from this trade.");
-        addPlayersInTrade(numPlayersGained,trade.assetsGained);
+        addPlayersInTrade(numPlayersGained,trade.assetsGained, oppTeam);
         System.out.println("Please enter all the players you've traded away.");
-        addPlayersInTrade(numPlayersLost, trade.assetsLost);
+        addPlayersInTrade(numPlayersLost, trade.assetsLost, userTeam);
         tradeCalculator = new TradeCalculator(trade);
     }
 
-    private static void addPlayersInTrade(int numPlayers, ArrayList<Player> playerList){
+    private static void addPlayersInTrade(int numPlayers, ArrayList<Player> playerList, Team tradePartnerTeam){
         while (playerList.size() != numPlayers){
             String playerName = scanner.nextLine();
             Player p = playerDatabase.getPlayerByName(playerName);
-            if (p != null){
+            if (p != null && tradePartnerTeam.getRoster().contains(p)){
                 playerList.add(p);
             }
             else
@@ -96,7 +101,7 @@ public class Main {
             Thread.sleep(1000);
             System.out.println("Solving world hunger....\n");
             Thread.sleep(1000);
-            System.out.println("\n" + tradeCalculator.getTradeWinner());
+            System.out.println("\n" + tradeCalculator);
         } catch (InterruptedException e){
             System.out.println("Please rerun the program, a fatal error occurred.");
         }

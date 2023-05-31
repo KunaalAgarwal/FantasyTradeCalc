@@ -30,22 +30,6 @@ public class TradeCalculator {
             return trade.team1;
         }
         else {
-            System.out.println("Your team's overall trade grade: "  + getWeightedGrade(trade.team1, prevTeam1) + "/10");
-            System.out.println("Your team's projection trade grade: " + getProjGrades(trade.team1,prevTeam1) + "/10");
-            System.out.println("Your team's upside trade grade: " + getUpsideGrades(trade.team1,prevTeam1) + "/10");
-            if (!Double.isNaN(getInjuryRiskGrade(trade.team1,prevTeam1))) {
-                System.out.println("Your team's injury risk trade grade: " + getInjuryRiskGrade(trade.team1, prevTeam1) + "/10");
-            }
-            System.out.println("---------");
-
-            System.out.println("Trade partner's overall trade grade: "  + getWeightedGrade(trade.team2, prevTeam2) + "/10");
-            System.out.println("Trade partner's projection trade grade: " + getProjGrades(trade.team2,prevTeam2) + "/10");
-            System.out.println("Trade partner's upside trade grade: " + getUpsideGrades(trade.team2,prevTeam2) + "/10");
-            if (!Double.isNaN(getInjuryRiskGrade(trade.team2,prevTeam2))) {
-                System.out.println("Your team's injury risk trade grade: " + getInjuryRiskGrade(trade.team2, prevTeam2) + "/10");
-            }
-            System.out.println(" ");
-            System.out.println("Winner: ");
             return trade.team2;
         }
     }
@@ -59,7 +43,7 @@ public class TradeCalculator {
 
     private double getProjGrades(Team team, Team prevTeam){
         double projDif = team.getTotalProjection() - prevTeam.getTotalProjection();
-        return normalizeDif(projDif, 50);
+        return normalizeDif(projDif, 40);
     }
 
 
@@ -69,7 +53,7 @@ public class TradeCalculator {
             playersGained = trade.assetsLost;
         }
         double upsideDif = average(playersGained) - prevTeam.getAvgProj();
-        return normalizeDif(upsideDif, 35);
+        return normalizeDif(upsideDif, 25);
     }
 
     private double average (ArrayList<Player> p) {
@@ -95,5 +79,37 @@ public class TradeCalculator {
             return 1.0;
         }
         return grade;
+    }
+
+    @Override
+    public String toString() {
+        StringBuilder sb = new StringBuilder();
+
+        double team1WeightedGrade = getWeightedGrade(trade.team1, prevTeam1);
+        double team2WeightedGrade = getWeightedGrade(trade.team2, prevTeam2);
+
+        sb.append("Your team's overall trade grade: ").append(team1WeightedGrade).append("/10\n");
+        sb.append("Your team's projection trade grade: ").append(getProjGrades(trade.team1, prevTeam1)).append("/10\n");
+        sb.append("Your team's upside trade grade: ").append(getUpsideGrades(trade.team1, prevTeam1)).append("/10\n");
+
+        double team1InjuryRiskGrade = getInjuryRiskGrade(trade.team1, prevTeam1);
+        if (!Double.isNaN(team1InjuryRiskGrade)) {
+            sb.append("Your team's injury risk trade grade: ").append(team1InjuryRiskGrade).append("/10\n");
+        }
+
+        sb.append("---------\n");
+
+        sb.append("Trade partner's overall trade grade: ").append(team2WeightedGrade).append("/10\n");
+        sb.append("Trade partner's projection trade grade: ").append(getProjGrades(trade.team2, prevTeam2)).append("/10\n");
+        sb.append("Trade partner's upside trade grade: ").append(getUpsideGrades(trade.team2, prevTeam2)).append("/10\n");
+
+        double team2InjuryRiskGrade = getInjuryRiskGrade(trade.team2, prevTeam2);
+        if (!Double.isNaN(team2InjuryRiskGrade)) {
+            sb.append("Trade partner's injury risk trade grade: ").append(team2InjuryRiskGrade).append("/10\n");
+        }
+
+        sb.append("Winner: ").append(getTradeWinner());
+
+        return sb.toString();
     }
 }
