@@ -15,6 +15,7 @@ public class Main {
     static PlayerDAO playerDatabase;
     static String[] positionList;
     static Scanner scanner;
+    static DatabaseManager dm;
 
     public static void main(String[] args) {
         System.out.println("Welcome to the Fantasy Trade Calculator!");
@@ -23,13 +24,18 @@ public class Main {
         fillTeamRoster(userTeam, "your", rosterSize);
         fillTeamRoster(oppTeam, "your trade partner's", rosterSize);
         getTradeInfo();
+        try {
+            dm.closeConnection();
+        } catch (SQLException e) {
+            System.out.println("There was a fatal error in the program, please rerun.");
+        }
         executeTradeCalculator();
     }
 
     public static void initialize(){
         try {
             scanner = new Scanner(System.in);
-            DatabaseManager dm = new DatabaseManager();
+            dm = new DatabaseManager();
             playerDatabase = dm.createPlayerDAO();
             positionList = new String[]{"QB", "RB", "WR", "TE"};
             HashMap<String, Integer> rosCons = setRosConstruction();
