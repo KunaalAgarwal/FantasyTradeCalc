@@ -123,7 +123,7 @@ public class TradeCalculator {
             sb.append("Trade partner's injury risk trade grade: ").append(team2InjuryRiskGrade).append("/10\n");
         }
 
-        sb.append("Winner: ").append(getTradeWinner());
+        sb.append("\nWinner: ").append(getTradeWinner());
 
         return sb.toString();
     }
