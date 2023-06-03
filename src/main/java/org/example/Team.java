@@ -29,8 +29,14 @@ public class Team {
         else
             throw new IllegalArgumentException("Player not found on roster");
     }
+    public ArrayList<Player> getStartingRoster(){
+        if (startingRoster.size() == 0){
+            return null;
+        }
+        return startingRoster;
+    }
 
-    protected ArrayList<Player> getStartingRoster(){
+    protected ArrayList<Player> fillStartingRoster(){
         for (String position : rosterConstruction.keySet()){
             List<Player> sortedPosPlayers = sortRoster(position);
             if (sortedPosPlayers.size() > 0) {
@@ -40,9 +46,6 @@ public class Team {
             }
         }
         return startingRoster;
-    }
-    public void clearStartingRoster(){
-        startingRoster.clear();
     }
     protected List<Player> sortRoster(String position){
         List<Player> temp;

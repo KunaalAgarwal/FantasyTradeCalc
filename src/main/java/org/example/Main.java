@@ -37,7 +37,7 @@ public class Main {
             scanner = new Scanner(System.in);
             dm = new DatabaseManager();
             playerDatabase = dm.createPlayerDAO();
-            positionList = new String[]{"QB", "RB", "WR", "TE"};
+            positionList = new String[]{"QB", "RB", "WR", "TE", "FLEX"};
             HashMap<String, Integer> rosCons = setRosConstruction();
             userTeam = new Team ("User's Team", rosCons);
             oppTeam = new Team ("Trade Partner's Team", rosCons);

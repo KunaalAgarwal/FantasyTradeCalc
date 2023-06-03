@@ -10,6 +10,8 @@ public class TradeCalculator {
         this.trade = trade;
         setPrevTeams();
         trade.executeTrade();
+        trade.team1.fillStartingRoster();
+        trade.team2.fillStartingRoster();
     }
 
     private void setPrevTeams() {
@@ -17,12 +19,12 @@ public class TradeCalculator {
         for (Player p : trade.team1.getRoster()){
             prevTeam1.addPlayerToRoster(p);
         }
-        prevTeam1.getStartingRoster();
+        prevTeam1.fillStartingRoster();
         prevTeam2 = new Team(trade.team2.getName(), trade.team2.getRosterConstruction());
         for (Player p : trade.team2.getRoster()){
             prevTeam2.addPlayerToRoster(p);
         }
-        prevTeam2.getStartingRoster();
+        prevTeam2.fillStartingRoster();
     }
 
     public Team getTradeWinner(){

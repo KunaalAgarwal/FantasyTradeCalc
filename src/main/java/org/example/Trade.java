@@ -15,8 +15,6 @@ public class Trade {
     }
 
     public void executeTrade(){
-        team1.clearStartingRoster();
-        team2.clearStartingRoster();
         for (Player p : assetsLost){
             if (team1.getRoster().contains(p) && !team2.getRoster().contains(p)) {
                 team1.removePlayerFromRoster(p);
@@ -29,8 +27,6 @@ public class Trade {
                 team1.addPlayerToRoster(a);
             }
         }
-        team1.getStartingRoster();
-        team2.getStartingRoster();
     }
     @Override
     public String toString(){

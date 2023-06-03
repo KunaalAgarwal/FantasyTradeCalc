@@ -97,7 +97,7 @@ public class PlayerTeamTradeTest {
         team2.addPlayerToRoster(playerB);
         ArrayList<Player> actualSr = new ArrayList<>();
         actualSr.add(playerA);
-        assertIterableEquals(actualSr,team2.getStartingRoster());
+        assertIterableEquals(actualSr,team2.fillStartingRoster());
     }
 
     @Test
@@ -106,16 +106,17 @@ public class PlayerTeamTradeTest {
         team2.addPlayerToRoster(playerA);
         ArrayList<Player> actualSr = new ArrayList<>();
         actualSr.add(playerA);
-        assertIterableEquals(actualSr,team2.getStartingRoster());
+        assertIterableEquals(actualSr,team2.fillStartingRoster());
     }
 
     @Test
-    public void fillStartingRosterWithFLEX(){
+    public void fillStartingRoster2Pos(){
         rosterCons.put("QB",1); rosterCons.put("TE",1);
         List<Player> actualStartingRoster = new ArrayList<>();
         actualStartingRoster.add(playerA); actualStartingRoster.add(playerD);
-        assertIterableEquals(actualStartingRoster,team.getStartingRoster());
+        assertIterableEquals(actualStartingRoster,team.fillStartingRoster());
     }
+
 
     @Test
     public void executeTradeTest(){
