@@ -83,10 +83,10 @@ public class TradeCalcTest {
         team2.addPlayerToRoster(pd.getPlayerByName("Deandre Hopkins"));
         team2.addPlayerToRoster(pd.getPlayerByName("Saquon Barkley"));
         team2.addPlayerToRoster(pd.getPlayerByName("Derrick Henry"));
-        trade.assetsGained.add(pd.getPlayerByName("Deandre Hopkins"));
+        trade.assetsGained.add(pd.getPlayerByName("Saquon Barkley"));
         trade.assetsLost.add(GeorgeTE);
         TradeCalculator tc = new TradeCalculator(trade);
-        tc.getTradeWinner();
+        assertEquals(team,tc.getTradeWinner());
     }
 
     @Test
@@ -98,7 +98,6 @@ public class TradeCalcTest {
 
         team2.addPlayerToRoster(pd.getPlayerByName("Deandre Hopkins"));
         team2.addPlayerToRoster(pd.getPlayerByName("Saquon Barkley"));
-        team2.addPlayerToRoster(pd.getPlayerByName("Derrick Henry"));
 
         trade.assetsGained.add(pd.getPlayerByName("Deandre Hopkins"));
         trade.assetsLost.add(TyreekWR);
