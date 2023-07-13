@@ -17,6 +17,7 @@ public class Main {
     static Scanner scanner;
     static DatabaseManager dm;
 
+
     public static void main(String[] args) {
         System.out.println("Welcome to the Fantasy Trade Calculator!");
         initialize();
